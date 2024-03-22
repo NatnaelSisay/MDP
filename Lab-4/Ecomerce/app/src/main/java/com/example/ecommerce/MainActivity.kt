@@ -2,11 +2,14 @@ package com.example.ecommerce
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.ecommerce.databinding.ActivityMainBinding
+import com.google.gson.Gson
+import com.google.gson.JsonParser
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -17,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val storage = getSharedPreferences("AUTH", Context.MODE_PRIVATE)
 
-//        UI-elements
+        // UI-elements
         val etEmail = binding.etEmail
         val etPassword = binding.etPassword
         //
@@ -31,23 +34,23 @@ class MainActivity : AppCompatActivity() {
             val password = etPassword.text.toString();
 
             if(storage.getString(email, "") != ""){
-                val pass = storage.getString(email, "")
-                if(pass == password){
-                    Toast.makeText(this, "Successfull signup", Toast.LENGTH_LONG).show()
+                val user = Gson().fromJson<User>(storage.getString(email, ""), User::class.java)
+                if(user.password == password){
+                    Intent(this, ShoppingCategory::class.java).apply {
+                        startActivity(this)
+                    }
                 } else {
-                    Toast.makeText(this, "Not, Successfull signup", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Error, check email or password", Toast.LENGTH_LONG).show()
                 }
             } else {
-                Toast.makeText(this, "Not, Successfull signup", Toast.LENGTH_LONG).show()
-            }
-
-            Intent(this, CreateAccountActivity::class.java).apply {
-                startActivity(this)
+                Toast.makeText(this, "Error, check email or password", Toast.LENGTH_LONG).show()
             }
         }
 
         btnCreateAccount.setOnClickListener {
-            // Move user to CreateAccountActivity
+            Intent(this, CreateAccountActivity::class.java).apply {
+                startActivity(this)
+            }
         }
 
     }
