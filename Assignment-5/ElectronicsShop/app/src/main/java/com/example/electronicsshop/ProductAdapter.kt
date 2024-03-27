@@ -1,6 +1,7 @@
 package com.example.electronicsshop
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
 import android.view.LayoutInflater
@@ -25,13 +26,14 @@ class ProductAdapter(
         val btn = item.findViewById<Button>(R.id.btnMainAddToCart)
 
         fun bind(product: Product){
-//            add on click listener
             item.setOnClickListener{
-                Toast.makeText(context, "view Clicked", Toast.LENGTH_SHORT).show()
+                val intent = Intent(context, ProductDetailActivity::class.java)
+                intent.putExtra("EXTRA_PRODUCT", product)
+                context.startActivity(intent)
             }
 
             btn.setOnClickListener {
-                Toast.makeText(context, "button Clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "${tvMainProductTitle.text} Added to Cart", Toast.LENGTH_SHORT).show()
             }
 
         }
