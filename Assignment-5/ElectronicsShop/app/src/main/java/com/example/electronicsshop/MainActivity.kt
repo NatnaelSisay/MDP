@@ -2,6 +2,7 @@ package com.example.electronicsshop
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.electronicsshop.databinding.ActivityMainBinding
@@ -31,7 +32,23 @@ class MainActivity : AppCompatActivity() {
         )
 
         val rvMainRecycler = binding.rvMainRecycler
+        val btnViewCart = binding.btnViewCart
+
         rvMainRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        rvMainRecycler.adapter = ProductAdapter(this, productList)
+        rvMainRecycler.adapter = ProductAdapter(this, productList, cart)
+
+        btnViewCart.setOnClickListener {
+            var message = ""
+
+            if(cart.isEmpty()){
+                Toast.makeText(this, "Cart is Empty", Toast.LENGTH_SHORT).show()
+            }
+
+            for(product in cart){
+                message += "${product.name}\n"
+            }
+
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
     }
 }

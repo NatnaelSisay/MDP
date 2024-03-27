@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ProductAdapter(
     val context: Context,
-    val productList: ArrayList<Product>
+    val productList: ArrayList<Product>,
+    val cart: ArrayList<Product>
 ): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     inner class ViewHolder(val item: View): RecyclerView.ViewHolder(item){
         val tvMainProductTitle = item.findViewById<TextView>(R.id.tvMainProductTitle)
@@ -33,9 +34,13 @@ class ProductAdapter(
             }
 
             btn.setOnClickListener {
-                Toast.makeText(context, "${tvMainProductTitle.text} Added to Cart", Toast.LENGTH_SHORT).show()
+                if(!(product in cart)){
+                    cart.add(product)
+                    Toast.makeText(context, "${tvMainProductTitle.text} Added to Cart", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "${tvMainProductTitle.text} is already added", Toast.LENGTH_SHORT).show()
+                }
             }
-
         }
     }
 
