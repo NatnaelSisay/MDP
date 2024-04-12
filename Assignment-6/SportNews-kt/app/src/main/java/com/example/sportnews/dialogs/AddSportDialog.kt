@@ -26,7 +26,6 @@ class AddSportDialog(private val context: Context, val sFrag: SportsFragment) : 
             val spinnerSportType = layout.findViewById<Spinner>(R.id.spinnerSportsDialogType)
             val sportName = layout.findViewById<EditText>(R.id.etSportsDialogName)
             val description = layout.findViewById<EditText>(R.id.etSportsDialogInstruction)
-//            val tvError = layout.findViewById<TextView>(R.id.tvErrorMessage)
 
 //          validation
             val emptyFieldValidator = EmptyFieldValidator()

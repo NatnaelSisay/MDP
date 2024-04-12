@@ -14,6 +14,7 @@ import com.example.sportnews.R
 import com.example.sportnews.fragments.HistoricArchievesFragment
 import com.example.sportnews.models.Event
 import com.example.sportnews.models.History
+import com.example.sportnews.validators.EmptyFieldValidator
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -23,7 +24,6 @@ class AddHistoricDialog(private val context: Context, val hFragment: HistoricArc
     private lateinit var eventName: EditText;
     private lateinit var eventDate: EditText;
     private lateinit var eventDescription: EditText;
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -41,14 +41,22 @@ class AddHistoricDialog(private val context: Context, val hFragment: HistoricArc
                 this.showDatePickerDialog()
             }
 
+            val validator = EmptyFieldValidator()
+
             builder.setView(layout)
                 .setPositiveButton("Add") { dialog, id ->
-                    val newHistoryEvent = History(
-                        eventName.text.toString(),
-                        eventDate.text.toString(),
-                        eventDescription.text.toString()
-                    )
-                    hFragment.addNews(newHistoryEvent)
+                    val isValid = validator.validate(mutableListOf(eventName, eventDate, eventDescription))
+
+                    if(isValid){
+                        val newHistoryEvent = History(
+                            eventName.text.toString(),
+                            eventDate.text.toString(),
+                            eventDescription.text.toString()
+                        )
+                        hFragment.addNews(newHistoryEvent)
+                    } else {
+                        Toast.makeText(context, R.string.empty_field, Toast.LENGTH_SHORT).show()
+                    }
                 }
                 .setNegativeButton("Cancel") { dialog, id ->
                     Toast.makeText(context, "Cancel Add Sport", Toast.LENGTH_SHORT).show()

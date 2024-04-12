@@ -9,4 +9,5 @@
         <item>Combat</item>
         <item>Play</item>
     </string-array>
+    <string name="empty_field">* Error: Empty fields</string>
 </resources>

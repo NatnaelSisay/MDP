@@ -11,12 +11,14 @@ import androidx.fragment.app.DialogFragment
 import com.example.sportnews.R
 import com.example.sportnews.fragments.EventFragment
 import com.example.sportnews.models.Event
+import com.example.sportnews.validators.EmptyFieldValidator
 import java.util.Calendar
 
 class AddEventDialog(private val context: Context, val eventFragment: EventFragment): DialogFragment() {
     private lateinit var selectDate: EditText;
     private lateinit var eventName: EditText;
     private lateinit var eventDescription: EditText;
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -31,19 +33,26 @@ class AddEventDialog(private val context: Context, val eventFragment: EventFragm
                showDatePickerDialog()
             }
 
+            val validator = EmptyFieldValidator();
+
             builder.setView(layout)
                 .setPositiveButton("Add") { dialog, id ->
-                    val newEventDialog = Event(
-                        eventName.text.toString(),
-                        selectDate.text.toString(),
-                        eventDescription.text.toString()
-                    )
-                    eventFragment.addNews(newEventDialog)
+                    val isValid = validator.validate(mutableListOf<EditText>(eventName, selectDate, eventDescription))
+
+                    if(isValid){
+                        val newEventDialog = Event(
+                            eventName.text.toString(),
+                            selectDate.text.toString(),
+                            eventDescription.text.toString()
+                        )
+                        eventFragment.addNews(newEventDialog)
+                    } else {
+                        Toast.makeText(context, R.string.empty_field, Toast.LENGTH_SHORT).show()
+                    }
                 }
                 .setNegativeButton("Cancel") { dialog, id ->
                     Toast.makeText(context, "Cancel Add Sport", Toast.LENGTH_SHORT).show()
                 }
-            // Create the AlertDialog object and return it.
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
