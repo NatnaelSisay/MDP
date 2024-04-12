@@ -1,4 +1,4 @@
-package com.example.sportnews
+package com.example.sportnews.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

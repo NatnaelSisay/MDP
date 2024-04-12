@@ -15,10 +15,10 @@
         android:theme="@style/Theme.SportNews"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateAccountActivity"
+            android:name=".activities.CreateAccountActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"

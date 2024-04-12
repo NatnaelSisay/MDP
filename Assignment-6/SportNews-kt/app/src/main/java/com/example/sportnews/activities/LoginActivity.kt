@@ -1,9 +1,10 @@
-package com.example.sportnews
+package com.example.sportnews.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.sportnews.MainActivity
 import com.example.sportnews.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

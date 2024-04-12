@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.sportnews.activities.CreateAccountActivity
+import com.example.sportnews.activities.LoginActivity
 import com.example.sportnews.adapter.MyViewPagerAdapter
 import com.example.sportnews.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout.GRAVITY_FILL
