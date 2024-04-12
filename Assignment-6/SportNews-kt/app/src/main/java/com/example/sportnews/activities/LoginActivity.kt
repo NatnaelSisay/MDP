@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.sportnews.MainActivity
 import com.example.sportnews.databinding.ActivityLoginBinding
+import com.example.sportnews.validators.EmptyFieldValidator
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -26,7 +27,14 @@ class LoginActivity : AppCompatActivity() {
         val email = editor.getString("email", "")
         val password = editor.getString("password", "")
 
+        val validator = EmptyFieldValidator()
+
         btnLogin.setOnClickListener {
+            val isValid = validator.validate(mutableListOf(etLoginEmail, etLoginPass))
+            if(!isValid){
+                Toast.makeText(this, "Fields can't be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if(
                 etLoginEmail.text.toString() == email &&
                 etLoginPass.text.toString() == password
